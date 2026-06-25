@@ -15,13 +15,13 @@
 ### 方式一：Homebrew (macOS 推荐)
 
 ```bash
-brew tap jemin-wu/tunnelfiles https://github.com/jemin-wu/TunnelFiles
+brew tap jemin-us/tunnelfiles https://github.com/jemin-us/TunnelFiles
 brew install --cask tunnelfiles --no-quarantine
 ```
 
 ### 方式二：手动下载
 
-从 [Releases](https://github.com/jemin-wu/TunnelFiles/releases) 下载对应系统的安装包：
+从 [Releases](https://github.com/jemin-us/TunnelFiles/releases) 下载对应系统的安装包：
 
 | 系统                  | 文件                               |
 | --------------------- | ---------------------------------- |
@@ -53,7 +53,7 @@ sudo xattr -rd com.apple.quarantine /Applications/TunnelFiles.app
 Rust toolchain (`rustup`) + Node.js 22+ + pnpm 10 见上游各自文档。
 
 ```bash
-git clone https://github.com/jemin-wu/TunnelFiles.git
+git clone https://github.com/jemin-us/TunnelFiles.git
 cd TunnelFiles
 pnpm install
 pnpm tauri build

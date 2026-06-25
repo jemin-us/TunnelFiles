@@ -167,5 +167,5 @@ pub fn run() {
             commands::terminal::terminal_get_by_session,
         ])
         .run(tauri::generate_context!())
-        .expect("error while building tauri application");
+        .expect("error while running tauri application");
 }

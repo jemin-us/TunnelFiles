@@ -9,8 +9,6 @@ import { Settings, Moon, Sun, ChevronLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useAiHealthCheck } from "@/hooks/useAiHealthCheck";
-import { useSettings } from "@/hooks/useSettings";
 import { useTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
@@ -19,9 +17,6 @@ export function MainLayout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { theme, setTheme } = useTheme();
-  const { settings } = useSettings();
-
-  useAiHealthCheck(settings.aiEnabled, { autoLoadRuntime: true });
 
   const isFilesPage = location.pathname.startsWith("/files/");
   const isSettingsPage = location.pathname === "/settings";

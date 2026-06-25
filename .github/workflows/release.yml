@@ -106,7 +106,7 @@ jobs:
 
             或者使用 Homebrew 安装：
             ```bash
-            brew tap jemin-wu/tunnelfiles https://github.com/jemin-wu/TunnelFiles
+            brew tap jemin-us/tunnelfiles https://github.com/jemin-us/TunnelFiles
             brew install --cask tunnelfiles --no-quarantine
             ```
 

@@ -8,16 +8,7 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  Loader2,
-  FolderOpen,
-  Download,
-  Zap,
-  FileText,
-  TerminalSquare,
-  Shield,
-  Sparkles,
-} from "lucide-react";
+import { Loader2, FolderOpen, Download, Zap, FileText, TerminalSquare, Shield } from "lucide-react";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
 
 import { Button } from "@/components/ui/button";
@@ -45,11 +36,6 @@ import {
 import { cn } from "@/lib/utils";
 import { FullPageLoader } from "@/components/ui/LoadingSpinner";
 import { useSettings } from "@/hooks/useSettings";
-import { useAiHealthCheck } from "@/hooks/useAiHealthCheck";
-import { AiHealthBadge } from "@/components/ai/AiHealthBadge";
-import { InlineModelRow } from "@/components/ai/InlineModelRow";
-import { ModelOnboardingDialog } from "@/components/ai/ModelOnboardingDialog";
-import { useModelOnboarding } from "@/hooks/useModelOnboarding";
 import { KnownHostsList } from "@/components/settings/KnownHostsList";
 import type { LogLevel } from "@/types/settings";
 import {
@@ -57,9 +43,6 @@ import {
   TERMINAL_FONT_SIZE_MAX,
   TERMINAL_SCROLLBACK_MIN,
   TERMINAL_SCROLLBACK_MAX,
-  AI_MAX_CONCURRENT_PROBES_MIN,
-  AI_MAX_CONCURRENT_PROBES_MAX,
-  AI_OUTPUT_TOKEN_CAP_MAX,
 } from "@/types/settings";
 
 const LOG_LEVELS: { value: LogLevel; label: string }[] = [
@@ -78,16 +61,10 @@ const settingsSchema = z.object({
   terminalFontSize: z.number().min(TERMINAL_FONT_SIZE_MIN).max(TERMINAL_FONT_SIZE_MAX),
   terminalScrollbackLines: z.number().min(TERMINAL_SCROLLBACK_MIN).max(TERMINAL_SCROLLBACK_MAX),
   terminalFollowDirectory: z.boolean(),
-  aiEnabled: z.boolean(),
-  maxConcurrentAiProbes: z
-    .number()
-    .int()
-    .min(AI_MAX_CONCURRENT_PROBES_MIN)
-    .max(AI_MAX_CONCURRENT_PROBES_MAX),
 });
 
 type SettingsFormValues = z.infer<typeof settingsSchema>;
-type SettingsSection = "transfer" | "connection" | "terminal" | "security" | "logs" | "ai";
+type SettingsSection = "transfer" | "connection" | "terminal" | "security" | "logs";
 
 interface NavItemProps {
   icon: React.ReactNode;
@@ -144,8 +121,6 @@ function SettingRow({ label, description, children }: SettingRowProps) {
 export function SettingsPage() {
   const navigate = useNavigate();
   const { settings, updateSettings, isLoading, isUpdating } = useSettings();
-  const { status: aiHealthStatus, refetch: refetchHealth } = useAiHealthCheck(settings.aiEnabled);
-  const onboarding = useModelOnboarding();
   const [activeSection, setActiveSection] = useState<SettingsSection>("transfer");
 
   const form = useForm<SettingsFormValues>({
@@ -159,8 +134,6 @@ export function SettingsPage() {
       terminalFontSize: settings.terminalFontSize,
       terminalScrollbackLines: settings.terminalScrollbackLines,
       terminalFollowDirectory: settings.terminalFollowDirectory,
-      aiEnabled: settings.aiEnabled,
-      maxConcurrentAiProbes: settings.maxConcurrentAiProbes,
     },
   });
 
@@ -174,10 +147,6 @@ export function SettingsPage() {
       terminalFontSize: values.terminalFontSize,
       terminalScrollbackLines: values.terminalScrollbackLines,
       terminalFollowDirectory: values.terminalFollowDirectory,
-      aiEnabled: values.aiEnabled,
-      // aiModelName 在 v0.1 中是 pin 值（见 approved-model-sources.md），
-      // UI 只读展示；不走 form patch
-      maxConcurrentAiProbes: values.maxConcurrentAiProbes,
     });
     navigate(-1);
   };
@@ -242,12 +211,6 @@ export function SettingsPage() {
             label="Terminal"
             active={activeSection === "terminal"}
             onClick={() => setActiveSection("terminal")}
-          />
-          <NavItem
-            icon={<Sparkles className="size-3.5" />}
-            label="AI"
-            active={activeSection === "ai"}
-            onClick={() => setActiveSection("ai")}
           />
           <NavItem
             icon={<Shield className="size-3.5" />}
@@ -497,99 +460,6 @@ export function SettingsPage() {
                         </SettingRow>
                       )}
                     />
-                  </div>
-                </section>
-              )}
-
-              {/* AI_CONFIG */}
-              {activeSection === "ai" && (
-                <section className="animate-fade-in">
-                  <div className="mb-1 flex items-center gap-2">
-                    <h2 className="text-base font-semibold">AI Shell Copilot</h2>
-                    <AiHealthBadge status={aiHealthStatus} />
-                  </div>
-                  <p className="text-muted-foreground mb-6 text-xs">
-                    Local-only terminal assistant. Default off.
-                  </p>
-                  <ModelOnboardingDialog onboarding={onboarding} />
-
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="aiEnabled"
-                      render={({ field }) => (
-                        <SettingRow
-                          label="Enable AI assistant"
-                          description="No data leaves your machine. Requires local model download."
-                        >
-                          <FormItem className="space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                                disabled={isUpdating}
-                                aria-label="Enable AI assistant"
-                                className="size-5 border-2"
-                              />
-                            </FormControl>
-                          </FormItem>
-                        </SettingRow>
-                      )}
-                    />
-
-                    <div className="py-3">
-                      <InlineModelRow
-                        aiHealthStatus={aiHealthStatus}
-                        onboarding={onboarding}
-                        licenseAcceptedAt={settings.aiLicenseAcceptedAt}
-                        onModelStateChanged={refetchHealth}
-                      />
-                    </div>
-
-                    <FormField
-                      control={form.control}
-                      name="maxConcurrentAiProbes"
-                      render={({ field }) => (
-                        <SettingRow
-                          label="Max concurrent probes"
-                          description="Independent read-only SSH probe sessions"
-                        >
-                          <FormItem className="space-y-0">
-                            <div className="flex items-center gap-4">
-                              <FormControl>
-                                <Slider
-                                  min={AI_MAX_CONCURRENT_PROBES_MIN}
-                                  max={AI_MAX_CONCURRENT_PROBES_MAX}
-                                  step={1}
-                                  value={[field.value]}
-                                  onValueChange={(vals) => field.onChange(vals[0])}
-                                  disabled={isUpdating}
-                                  className="flex-1"
-                                />
-                              </FormControl>
-                              <div className="bg-muted/50 border-border/50 flex h-9 w-9 items-center justify-center rounded border">
-                                <span className="text-foreground text-sm font-medium">
-                                  {field.value}
-                                </span>
-                              </div>
-                            </div>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        </SettingRow>
-                      )}
-                    />
-
-                    <SettingRow
-                      label="Output token cap"
-                      description="Hard upper bound on model output per response"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-foreground font-mono text-sm font-medium">
-                          {AI_OUTPUT_TOKEN_CAP_MAX}
-                        </span>
-                        <span className="text-muted-foreground text-xs">tokens (fixed)</span>
-                      </div>
-                    </SettingRow>
                   </div>
                 </section>
               )}

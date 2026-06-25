@@ -13,9 +13,6 @@ pub mod models;
 pub mod services;
 pub mod utils;
 
-use services::ai::executor::ProbeExecutor;
-use services::ai::planner::PlannerManager;
-use services::ai::rollback;
 use services::session_manager::SessionManager;
 use services::storage_service::Database;
 use services::terminal_manager::TerminalManager;
@@ -27,32 +24,6 @@ use tauri::Emitter;
 use commands::session::SessionStatusPayload;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
-/// 一次性文件名迁移：旧版本 settings.ai_model_name = "gemma4:e4b"  → GGUF
-/// 保存为 "gemma4-e4b.gguf"；新版 T1.5 pin 文件名是
-/// "gemma-4-E4B-it-Q4_K_M.gguf"。若旧文件存在且新文件不存在，无感 rename。
-///
-/// 幂等：两者都存在时不动（以新文件为准）；两者都不存在也无操作。失败
-/// 记 warn 但不阻塞启动 —— 用户最多需要重新下载一次。
-fn migrate_legacy_gguf_filename() {
-    let Some(base) = dirs::data_local_dir() else {
-        return;
-    };
-    let models_dir = base.join("TunnelFiles").join("models");
-    let legacy = models_dir.join("gemma4-e4b.gguf");
-    let canonical = models_dir.join("gemma-4-E4B-it-Q4_K_M.gguf");
-    if !legacy.exists() || canonical.exists() {
-        return;
-    }
-    match std::fs::rename(&legacy, &canonical) {
-        Ok(()) => tracing::info!(
-            from = %legacy.display(),
-            to = %canonical.display(),
-            "旧 GGUF 文件名迁移成功"
-        ),
-        Err(e) => tracing::warn!(error = %e, "旧 GGUF 文件名迁移失败；用户可能需手动 rename"),
-    }
-}
-
 pub fn run() {
     // 1. 初始化数据库（设置现在存储在数据库中）
     let database = match Database::init() {
@@ -91,27 +62,9 @@ pub fn run() {
     // 5. 初始化终端管理器
     let terminal_manager = Arc::new(TerminalManager::new());
 
-    // 5.5 初始化 probe 并发执行器（T2.8）
-    let probe_executor = Arc::new(ProbeExecutor::new(settings.max_concurrent_ai_probes as u32));
-
-    // 5.6 初始化 planner 状态机（T3）
-    let planner_manager = Arc::new(PlannerManager::new());
-
     // 6. 启动时清理旧日志（保留 7 天）
     if let Err(e) = cleanup_old_logs(7) {
         tracing::warn!(error = %e, "清理旧日志失败");
-    }
-
-    // 6.5 一次性迁移：旧 settings.ai_model_name = "gemma4:e4b" 对应的 GGUF 文件
-    // 曾以 "gemma4-e4b.gguf" 保存；T1.5 改 pin 到 "gemma-4-E4B-it-Q4_K_M" 后
-    // 路径 resolver 不再找得到旧文件。此处无感改名，避免用户白白再下 5GB。
-    migrate_legacy_gguf_filename();
-
-    // 6.6 启动清理过期 AI snapshots（T3.2a）。crash 残留按 session 目录 TTL 24h 清理。
-    match rollback::cleanup_orphans_at_startup(rollback::SNAPSHOT_TTL_HOURS_DEFAULT) {
-        Ok(removed) if removed > 0 => tracing::info!(removed, "已清理过期 AI snapshots"),
-        Ok(_) => {}
-        Err(e) => tracing::warn!(error = %e, "启动清理 AI snapshots 失败"),
     }
 
     // 7. 构建 Tauri 应用
@@ -160,8 +113,6 @@ pub fn run() {
         .manage(session_manager)
         .manage(transfer_manager)
         .manage(terminal_manager)
-        .manage(probe_executor)
-        .manage(planner_manager)
         .invoke_handler(tauri::generate_handler![
             // Profile 命令
             commands::profile::profile_list,
@@ -214,23 +165,7 @@ pub fn run() {
             commands::terminal::terminal_close,
             commands::terminal::terminal_reconnect,
             commands::terminal::terminal_get_by_session,
-            // AI 命令
-            commands::ai::ai_health_check,
-            commands::ai::ai_chat_send,
-            commands::ai::ai_chat_cancel,
-            commands::ai::ai_context_snapshot,
-            commands::ai::ai_plan_create,
-            commands::ai::ai_plan_step_execute,
-            commands::ai::ai_plan_step_confirm,
-            commands::ai::ai_plan_step_revise,
-            commands::ai::ai_plan_cancel,
-            commands::ai::ai_plan_rollback,
-            commands::ai::ai_license_accept,
-            commands::ai::ai_model_download,
-            commands::ai::ai_model_download_cancel,
-            commands::ai::ai_model_delete,
-            commands::ai::ai_runtime_load,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .expect("error while building tauri application");
 }

@@ -1,4 +1,3 @@
-pub mod ai;
 pub mod profile;
 pub mod security;
 pub mod session;

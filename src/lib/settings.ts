@@ -23,11 +23,6 @@ const SettingsSchema = z.object({
   terminalFontSize: z.number(),
   terminalScrollbackLines: z.number(),
   terminalFollowDirectory: z.boolean(),
-  aiEnabled: z.boolean(),
-  aiModelName: z.string(),
-  maxConcurrentAiProbes: z.number(),
-  aiOutputTokenCap: z.number(),
-  aiLicenseAcceptedAt: z.number().optional(),
 });
 
 // ============================================================================

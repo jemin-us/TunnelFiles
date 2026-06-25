@@ -59,68 +59,8 @@ dirs = "5"
 sha2 = "0.10"
 base64 = "0.22"
 
-# AI 模型下载（SPEC §5 T1.5，Ask First 已批准 2026-04-18）。
-# Feature 白名单：rustls-tls（纯 Rust，避免 OpenSSL 系统依赖）/ stream（Range resume + 进度
-# 回调）/ http2（HuggingFace 直链走 HTTP/2）/ gzip（服务端可能启用传输编码）。
-# 禁用 default-features（排除 native-tls / cookies / blocking 等不需要的 features）。
-reqwest = { version = "0.12", default-features = false, features = [
-    "rustls-tls",
-    "stream",
-    "http2",
-    "gzip",
-] }
-
-# 跨平台磁盘可用空间查询（SPEC §5 T1.5 下载前 7GB gate）。
-# 选型论证：fs4 维护活跃（2024 更新），内部封装 libc::statvfs + Windows API，
-# 避免手写 cfg-gated FFI；单一职责，依赖树极小。
-fs4 = "0.12"
-
-# 异步字节流 trait（reqwest::Response::bytes_stream 返回 futures Stream）
-# 已通过 [dev-dependencies] 引入，这里升级到生产路径。
-futures-util = "0.3"
-
 # 安全内存清零
 zeroize = "1"
-
-# 凭证 scrubber 正则匹配（SPEC §7 Ask First 新依赖：
-# regex 1.12 已经以传递依赖存在于 Cargo.lock，升级为直接依赖无新依赖树影响）
-regex = "1"
-
-# 平台 RAM 探测（macOS sysctlbyname + Linux /proc/meminfo）。
-# libc 已作为多个上游依赖（ssh2、tauri、llama-cpp-sys-2）的传递依赖存在，
-# 升级为直接依赖无新依赖树影响。
-libc = "0.2"
-
-# UTF-8 流式解码（LlamaTokenLoop 跨 token 边界拼字节 → str）。
-# encoding_rs 已经以传递依赖存在于 llama-cpp-2，升级为直接依赖无新依赖树影响。
-encoding_rs = "0.8"
-
-# Unicode NFKC 规范化（SPEC §5 T2.4 wrap_untrusted 流水线）。
-# 将全角/兼容字符规范到 ASCII，防止 ＜／ｕｎｔｒｕｓｔｅｄ＞ 绕过 strip_close_tag。
-# unicode-normalization 已以传递依赖存在（regex 依赖树），升级为直接依赖。
-unicode-normalization = "0.1"
-
-# Shell 命令 AST 解析（SPEC §5 T2.2，Ask First 已批准）。
-# tree-sitter-bash 0.21 对应 tree-sitter 0.22 API（language() fn）。
-# 严格 pin 防 bash grammar 升级破坏 deny-node-kinds 集合。
-tree-sitter = "=0.22.6"
-tree-sitter-bash = "=0.21.0"
-
-# 文本 diff 生成（SPEC §5 T3.3）。
-# 仅用于 snapshot 确认预览 / rollback 审计，后端输出 unified diff 字符串。
-similar = "2"
-
-# AI 推理运行时（SPEC §5 T1.3，Ask First 已批准 2026-04-17）。
-# 严格 pin 版本防 bundled llama.cpp 升级回归（SPEC §5 llama-cpp-2 pin 说明）。
-# Feature 白名单：macOS → metal；Windows/Linux → default（CPU）。
-# 禁用的 upstream 默认 features：openmp / android-shared-stdcxx（SPEC §7 Never）。
-# CUDA / Vulkan / ROCm 严禁启用（SPEC §7 Never "llama.cpp backend whitelist 外"）。
-# 系统先决条件：cmake（README "系统先决条件" 节）。
-[target.'cfg(target_os = "macos")'.dependencies]
-llama-cpp-2 = { version = "=0.1.143", default-features = false, features = ["metal"] }
-
-[target.'cfg(not(target_os = "macos"))'.dependencies]
-llama-cpp-2 = { version = "=0.1.143", default-features = false }
 
 [dev-dependencies]
 tempfile = "3"

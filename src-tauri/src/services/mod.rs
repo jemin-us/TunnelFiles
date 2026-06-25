@@ -1,4 +1,3 @@
-pub mod ai;
 pub mod security_service;
 pub mod session_manager;
 pub mod sftp_service;

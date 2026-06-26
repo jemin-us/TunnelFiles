@@ -92,11 +92,33 @@ export default [
         "warn",
         { roles: ["listitem", "row", "rowgroup", "tabpanel"], tags: [] },
       ],
+      // IPC boundary: all invoke() must go through src/lib/*.ts wrappers
+      // (timedInvoke + Zod). Allowed inside src/lib/** via the override below.
+      // See .claude/rules/stack-tauri.md and .claude/rules/core-dont.md.
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@tauri-apps/api/core",
+              message:
+                "IPC must go through src/lib/*.ts wrappers (timedInvoke + Zod). Direct invoke() is forbidden outside src/lib/.",
+            },
+          ],
+        },
+      ],
     },
     settings: {
       react: {
         version: "detect",
       },
+    },
+  },
+  {
+    // IPC boundary exception: src/lib/*.ts IS the wrapper layer, so invoke() is allowed here.
+    files: ["src/lib/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": "off",
     },
   },
   prettier,

@@ -38,7 +38,20 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
-          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment'
+          prompt: |
+            /code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment
+
+            Extra focus for this repo: when the diff touches src-tauri/, treat the
+            concurrency & SSH-safety boundary as a first-class review dimension. Read
+            .claude/rules/stack-rust.md and .claude/rules/domain-ssh-transfer.md, then
+            verify the changed Rust against these invariants (report violations with file:line):
+            - every ssh2::* / Sftp::* / rusqlite::* call sits inside tokio::task::spawn_blocking
+            - any new `unsafe impl Send/Sync` carries a SAFETY comment justifying the invariants
+            - lock acquisition order stays channel -> session (deadlock risk with reconnect)
+            - no tokio::sync::Mutex on the ssh2 (blocking) path — use std::sync inside spawn_blocking
+            - terminal reader generation counter / reconnect races are handled correctly
+            These are type-invisible runtime risks (deadlock, libssh2 data races) that
+            clippy / tsc / CI cannot catch.
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://code.claude.com/docs/en/cli-reference for available options
 

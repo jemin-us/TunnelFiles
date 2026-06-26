@@ -9,8 +9,8 @@ requires:
   - jsdom
   - "@wdio/cli"
 evidence:
-  - __tests__/hooks/useConnect.test.tsx
-  - __tests__/setup.ts
+  - test/unit/hooks/useConnect.test.tsx
+  - test/unit/setup.ts
   - test/e2e/wdio.conf.ts
   - docker/setup-test-env.sh
   - package.json
@@ -63,12 +63,12 @@ pnpm test:ui           # Vitest UI
 - Cover the four states: `empty` / `loading` (skeleton) / `error` (retry) / `success`
 - Prefer `screen.getByRole()` > `getByLabelText()` > `getByText()` > `getByTestId()`
 - Wrap async state changes in `act()`
-- Don't use `import.meta.vitest` inline tests — all tests live in `__tests__/**`
+- Don't use `import.meta.vitest` inline tests — all tests live in `test/unit/**`
 
 ### Test Fixture Locations
 
 ```
-__tests__/
+test/unit/
   setup.ts            # vitest setup, global mocks
   helpers/            # shared test fixtures (createMockProfile, etc.)
   mocks/              # IPC mock factories

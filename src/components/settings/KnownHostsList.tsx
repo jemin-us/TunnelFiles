@@ -3,7 +3,8 @@
  */
 
 import { useState } from "react";
-import { Loader2, Trash2, ShieldCheck } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon, Delete02Icon, SecurityCheckIcon } from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -82,9 +83,9 @@ function KnownHostRow({
         title="Remove trusted host"
       >
         {isRemoving ? (
-          <Loader2 className="size-3.5 animate-spin" />
+          <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
         ) : (
-          <Trash2 className="size-3.5" />
+          <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
         )}
       </Button>
     </div>
@@ -111,7 +112,7 @@ function EmptyState() {
   return (
     <div className="flex flex-col items-center gap-3 py-8 text-center">
       <div className="bg-muted/50 flex size-10 items-center justify-center rounded-lg">
-        <ShieldCheck className="text-muted-foreground size-5" />
+        <HugeiconsIcon icon={SecurityCheckIcon} className="text-muted-foreground size-5" />
       </div>
       <div>
         <p className="text-foreground/90 text-sm font-medium">No trusted hosts</p>
@@ -188,7 +189,9 @@ export function KnownHostsList() {
               disabled={removeKnownHost.isPending}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {removeKnownHost.isPending && <Loader2 className="size-3.5 animate-spin" />}
+              {removeKnownHost.isPending && (
+                <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+              )}
               Remove
             </AlertDialogAction>
           </AlertDialogFooter>

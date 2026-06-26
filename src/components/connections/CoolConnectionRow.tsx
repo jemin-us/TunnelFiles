@@ -3,7 +3,13 @@
  * Lower visual weight but still spatially present (Polanyi: peripheral awareness)
  */
 
-import { ArrowRight, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  ArrowRight02Icon,
+  MoreHorizontalIcon,
+  Edit02Icon,
+  Delete02Icon,
+} from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -82,7 +88,7 @@ export function CoolConnectionRow({
             onConnect(profile.id);
           }}
         >
-          <ArrowRight className="size-3" />
+          <HugeiconsIcon icon={ArrowRight02Icon} className="size-3" />
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -93,7 +99,7 @@ export function CoolConnectionRow({
               className="text-muted-foreground hover:text-foreground h-6 w-6"
               onClick={(e) => e.stopPropagation()}
             >
-              <MoreHorizontal className="size-3" />
+              <HugeiconsIcon icon={MoreHorizontalIcon} className="size-3" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-36">
@@ -103,7 +109,7 @@ export function CoolConnectionRow({
                 onEdit(profile);
               }}
             >
-              <Pencil className="size-3.5" />
+              <HugeiconsIcon icon={Edit02Icon} className="size-3.5" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -114,7 +120,7 @@ export function CoolConnectionRow({
                 onDelete(profile);
               }}
             >
-              <Trash2 className="size-3.5" />
+              <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

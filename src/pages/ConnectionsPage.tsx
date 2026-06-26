@@ -11,7 +11,14 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Plus, Loader2, Server, Search, X } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  PlusSignIcon,
+  Loading03Icon,
+  ServerStack01Icon,
+  Search01Icon,
+  Cancel01Icon,
+} from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import { FullPageLoader } from "@/components/ui/LoadingSpinner";
@@ -250,7 +257,10 @@ export function ConnectionsPage() {
       {profiles.length > 0 && (
         <div className="flex items-center gap-2 px-3 pt-3 pb-1.5">
           <div className="relative flex-1">
-            <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
+            <HugeiconsIcon
+              icon={Search01Icon}
+              className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2"
+            />
             <Input
               ref={searchInputRef}
               value={query}
@@ -278,7 +288,7 @@ export function ConnectionsPage() {
                 className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2 -translate-y-1/2"
                 aria-label="Clear search"
               >
-                <X className="size-3.5" />
+                <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
               </button>
             )}
           </div>
@@ -303,7 +313,7 @@ export function ConnectionsPage() {
           <Empty className="h-full border-0">
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <Server />
+                <HugeiconsIcon icon={ServerStack01Icon} />
               </EmptyMedia>
               <EmptyTitle>No connections yet</EmptyTitle>
               <EmptyDescription>Add a remote server to get started</EmptyDescription>
@@ -315,7 +325,7 @@ export function ConnectionsPage() {
                 className="gap-2"
                 data-testid="add-connection-button"
               >
-                <Plus className="size-3.5" />
+                <HugeiconsIcon icon={PlusSignIcon} className="size-3.5" />
                 <span>New connection</span>
               </Button>
             </EmptyContent>
@@ -397,7 +407,7 @@ export function ConnectionsPage() {
                 data-testid="add-connection-button"
                 className="border-border/60 text-muted-foreground hover:border-primary/40 mt-1 h-10 w-full gap-2 border border-dashed text-xs"
               >
-                <Plus className="size-3.5" />
+                <HugeiconsIcon icon={PlusSignIcon} className="size-3.5" />
                 New connection
               </Button>
             </div>
@@ -438,7 +448,11 @@ export function ConnectionsPage() {
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90 h-8"
             >
-              {isDeleting ? <Loader2 className="size-3 animate-spin" /> : "Delete"}
+              {isDeleting ? (
+                <HugeiconsIcon icon={Loading03Icon} className="size-3 animate-spin" />
+              ) : (
+                "Delete"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

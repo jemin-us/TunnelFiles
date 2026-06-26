@@ -7,7 +7,7 @@ requires:
   - tailwindcss
   - tailwind-merge
   - "tw-animate-css"
-  - "lucide-react"
+  - "@hugeicons/react"
 globs: src/**/*.tsx, src/**/*.css, src/index.css, tailwind.config.*
 evidence:
   - src/index.css

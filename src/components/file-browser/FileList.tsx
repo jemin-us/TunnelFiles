@@ -4,7 +4,14 @@
 
 import { useRef, useCallback, useEffect, memo } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { ChevronUp, ChevronDown, FolderOpen, Search, X } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  ArrowUp01Icon,
+  ArrowDown01Icon,
+  FolderOpenIcon,
+  Search01Icon,
+  Cancel01Icon,
+} from "@hugeicons/core-free-icons";
 
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { FileIcon } from "./FileIcon";
@@ -81,12 +88,12 @@ function HeaderCell({ field, currentSort, onSort, children, className, style }: 
         {children}
         {isActive ? (
           currentSort!.order === "asc" ? (
-            <ChevronUp className="size-3" />
+            <HugeiconsIcon icon={ArrowUp01Icon} className="size-3" />
           ) : (
-            <ChevronDown className="size-3" />
+            <HugeiconsIcon icon={ArrowDown01Icon} className="size-3" />
           )
         ) : (
-          <ChevronUp className="size-3 opacity-0" />
+          <HugeiconsIcon icon={ArrowUp01Icon} className="size-3 opacity-0" />
         )}
       </Button>
     </div>
@@ -183,7 +190,7 @@ const FileRow = memo(function FileRow({
 function FilterBar({ query, onClear }: { query: string; onClear: () => void }) {
   return (
     <div className="border-border bg-muted/30 flex h-7 items-center gap-1.5 border-b px-3">
-      <Search className="text-muted-foreground size-3" />
+      <HugeiconsIcon icon={Search01Icon} className="text-muted-foreground size-3" />
       <span className="text-xs">
         Filter: <span className="text-foreground font-medium">{query}</span>
       </span>
@@ -192,7 +199,7 @@ function FilterBar({ query, onClear }: { query: string; onClear: () => void }) {
         className="text-muted-foreground hover:text-foreground ml-auto"
         aria-label="Clear filter"
       >
-        <X className="size-3" />
+        <HugeiconsIcon icon={Cancel01Icon} className="size-3" />
       </button>
     </div>
   );
@@ -379,7 +386,7 @@ export function FileList({
       <div className="text-muted-foreground animate-fade-in flex h-full flex-col items-center justify-center">
         <div className="border-border/50 flex flex-col items-center gap-3 rounded-lg border border-dashed px-8 py-6">
           <div className="bg-muted/30 border-border/50 flex h-10 w-10 items-center justify-center rounded-lg border">
-            <FolderOpen className="text-muted-foreground/50 size-6" />
+            <HugeiconsIcon icon={FolderOpenIcon} className="text-muted-foreground/50 size-6" />
           </div>
           <p className="text-sm">Directory is empty</p>
           <div className="flex flex-col items-center gap-0.5">

@@ -2,16 +2,17 @@
  * File Type Icon Component
  */
 
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  File,
-  FileCode,
-  FileText,
-  FileImage,
-  FileArchive,
-  FileAudio,
-  FileVideo,
-  Folder,
-} from "lucide-react";
+  File01Icon,
+  FileCodeIcon,
+  File02Icon,
+  FileImageIcon,
+  FileZipIcon,
+  FileAudioIcon,
+  FileVideoIcon,
+  Folder01Icon,
+} from "@hugeicons/core-free-icons";
 
 import { getFileType, type FileType } from "@/lib/file";
 import type { FileEntry } from "@/types";
@@ -22,15 +23,15 @@ interface FileIconProps {
   className?: string;
 }
 
-const iconMap: Record<FileType, typeof File> = {
-  folder: Folder,
-  code: FileCode,
-  document: FileText,
-  image: FileImage,
-  archive: FileArchive,
-  audio: FileAudio,
-  video: FileVideo,
-  other: File,
+const iconMap: Record<FileType, IconSvgElement> = {
+  folder: Folder01Icon,
+  code: FileCodeIcon,
+  document: File02Icon,
+  image: FileImageIcon,
+  archive: FileZipIcon,
+  audio: FileAudioIcon,
+  video: FileVideoIcon,
+  other: File01Icon,
 };
 
 const colorMap: Record<FileType, string> = {
@@ -46,8 +47,8 @@ const colorMap: Record<FileType, string> = {
 
 export function FileIcon({ file, className }: FileIconProps) {
   const fileType = getFileType(file);
-  const Icon = iconMap[fileType];
+  const icon = iconMap[fileType];
   const colorClass = colorMap[fileType];
 
-  return <Icon className={cn("size-4", colorClass, className)} />;
+  return <HugeiconsIcon icon={icon} className={cn("size-4", colorClass, className)} />;
 }

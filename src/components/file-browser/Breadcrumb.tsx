@@ -3,7 +3,8 @@
  * Supports editable mode via Cmd+L or double-click on current segment
  */
 
-import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 
 import { parsePath } from "@/lib/file";
@@ -173,7 +174,10 @@ export function Breadcrumb({
         if (segment === null) {
           return (
             <div key="collapsed" className="flex items-center gap-0.5">
-              <ChevronRight className="text-muted-foreground/40 size-3 shrink-0" />
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                className="text-muted-foreground/40 size-3 shrink-0"
+              />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -182,7 +186,7 @@ export function Breadcrumb({
                     className="h-5 px-1.5"
                     aria-label="Show collapsed path segments"
                   >
-                    <MoreHorizontal className="size-3.5" />
+                    <HugeiconsIcon icon={MoreHorizontalIcon} className="size-3.5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="text-xs">
@@ -202,7 +206,12 @@ export function Breadcrumb({
 
         return (
           <div key={segment.path} className="flex items-center gap-0.5">
-            {!isFirst && <ChevronRight className="text-muted-foreground/40 size-3 shrink-0" />}
+            {!isFirst && (
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                className="text-muted-foreground/40 size-3 shrink-0"
+              />
+            )}
             {isLast ? (
               <span
                 className="text-foreground max-w-40 cursor-text truncate rounded px-1.5 py-0.5 font-medium"

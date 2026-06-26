@@ -4,7 +4,8 @@
 
 import { Component, type ReactNode, useState } from "react";
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
-import { AlertTriangle, RefreshCw, Copy, Check } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Alert02Icon, Refresh01Icon, Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 
@@ -118,7 +119,7 @@ function ErrorFallback({ error, onReset }: ErrorFallbackProps) {
 
   return (
     <div className="flex h-full flex-col items-center justify-center p-8" role="alert">
-      <AlertTriangle className="text-destructive mb-4 size-12" />
+      <HugeiconsIcon icon={Alert02Icon} className="text-destructive mb-4 size-12" />
       <h2 className="mb-2 text-xl font-semibold">Something went wrong</h2>
       <p className="text-muted-foreground mb-4 max-w-md text-center">{message}</p>
       {detail && (
@@ -130,18 +131,18 @@ function ErrorFallback({ error, onReset }: ErrorFallbackProps) {
         <Button variant="secondary" onClick={handleCopy}>
           {copied ? (
             <>
-              <Check className="size-4" />
+              <HugeiconsIcon icon={Tick02Icon} className="size-4" />
               Copied
             </>
           ) : (
             <>
-              <Copy className="size-4" />
+              <HugeiconsIcon icon={Copy01Icon} className="size-4" />
               Copy error info
             </>
           )}
         </Button>
         <Button onClick={onReset}>
-          <RefreshCw className="size-4" />
+          <HugeiconsIcon icon={Refresh01Icon} className="size-4" />
           Retry
         </Button>
         <Button variant="outline" onClick={() => (window.location.href = "/connections")}>

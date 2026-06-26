@@ -67,11 +67,10 @@ describe("ConnectionItem", () => {
   });
 
   it("should show SSH key icon for key auth type", () => {
-    const { container } = render(<ConnectionItem {...defaultProps} profile={keyProfile} />);
+    render(<ConnectionItem {...defaultProps} profile={keyProfile} />);
 
-    // Key icon is rendered for key auth type
-    const keyIcon = container.querySelector(".lucide-key");
-    expect(keyIcon).toBeInTheDocument();
+    // Key auth badge renders with its accessible label (icon-library agnostic)
+    expect(screen.getByText("SSH key")).toBeInTheDocument();
   });
 
   it("should call onConnect when clicked", async () => {

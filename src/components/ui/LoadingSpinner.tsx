@@ -2,7 +2,8 @@
  * 加载动画组件
  */
 
-import { Loader2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 
 type SpinnerSize = "sm" | "md" | "lg";
@@ -26,7 +27,10 @@ export function LoadingSpinner({ size = "md", className, label }: LoadingSpinner
       role="status"
       aria-label={label || "Loading"}
     >
-      <Loader2 className={cn("text-primary animate-spin", sizeClasses[size])} />
+      <HugeiconsIcon
+        icon={Loading03Icon}
+        className={cn("text-primary animate-spin", sizeClasses[size])}
+      />
       {label && <span className="text-muted-foreground text-sm">{label}</span>}
     </div>
   );

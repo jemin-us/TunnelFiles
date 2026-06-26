@@ -8,7 +8,7 @@ requires:
   - "@radix-ui/react-slot"
   - "class-variance-authority"
   - "tailwind-merge"
-  - "lucide-react"
+  - "@hugeicons/react"
 globs: src/**/*.tsx, src/**/*.ts, components.json
 evidence:
   - components.json
@@ -76,7 +76,7 @@ import type { Profile } from "@/types/profile";
 ## shadcn/ui Conventions
 
 - Style: `new-york`
-- Icons: `lucide-react`
+- Icons: `@hugeicons/react` — render via `<HugeiconsIcon icon={Xxx01Icon} className="size-4" />`. Icon names are **data** imported from `@hugeicons/core-free-icons` (e.g. `Delete02Icon`), **not** components — `<Xxx01Icon />` does not exist. Free pack is stroke-rounded, native 1.5 weight; color via `text-*` (currentColor), size via `className`. Never pass `strokeWidth`/`size`/`color` props unless intentionally overriding.
 - Base color: `neutral`, CSS variables mode
 - TSX (not RSC)
 

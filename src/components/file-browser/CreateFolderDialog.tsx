@@ -3,7 +3,8 @@
  */
 
 import { useState, useCallback } from "react";
-import { Loader2, FolderPlus } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon, FolderAddIcon } from "@hugeicons/core-free-icons";
 
 import { cn } from "@/lib/utils";
 import {
@@ -86,7 +87,7 @@ export function CreateFolderDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <FolderPlus className="text-primary size-4" />
+              <HugeiconsIcon icon={FolderAddIcon} className="text-primary size-4" />
               <span>New folder</span>
             </DialogTitle>
             <DialogDescription className="sr-only">
@@ -130,7 +131,9 @@ export function CreateFolderDialog({
               Cancel
             </Button>
             <Button type="submit" size="sm" disabled={isPending || !name.trim()}>
-              {isPending && <Loader2 className="size-3.5 animate-spin" />}
+              {isPending && (
+                <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+              )}
               Create
             </Button>
           </DialogFooter>

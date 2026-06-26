@@ -8,7 +8,16 @@ import { useNavigate, useBlocker } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, FolderOpen, Download, Zap, FileText, TerminalSquare, Shield } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Loading03Icon,
+  FolderOpenIcon,
+  Download01Icon,
+  ZapIcon,
+  File02Icon,
+  TerminalIcon,
+  Shield01Icon,
+} from "@hugeicons/core-free-icons";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
 
 import { Button } from "@/components/ui/button";
@@ -195,31 +204,31 @@ export function SettingsPage() {
       <aside className="border-border bg-sidebar/50 flex w-44 shrink-0 flex-col border-r p-3">
         <nav aria-label="Settings navigation" className="flex-1 space-y-1 pt-2">
           <NavItem
-            icon={<Download className="size-3.5" />}
+            icon={<HugeiconsIcon icon={Download01Icon} className="size-3.5" />}
             label="Transfer"
             active={activeSection === "transfer"}
             onClick={() => setActiveSection("transfer")}
           />
           <NavItem
-            icon={<Zap className="size-3.5" />}
+            icon={<HugeiconsIcon icon={ZapIcon} className="size-3.5" />}
             label="Connection"
             active={activeSection === "connection"}
             onClick={() => setActiveSection("connection")}
           />
           <NavItem
-            icon={<TerminalSquare className="size-3.5" />}
+            icon={<HugeiconsIcon icon={TerminalIcon} className="size-3.5" />}
             label="Terminal"
             active={activeSection === "terminal"}
             onClick={() => setActiveSection("terminal")}
           />
           <NavItem
-            icon={<Shield className="size-3.5" />}
+            icon={<HugeiconsIcon icon={Shield01Icon} className="size-3.5" />}
             label="Security"
             active={activeSection === "security"}
             onClick={() => setActiveSection("security")}
           />
           <NavItem
-            icon={<FileText className="size-3.5" />}
+            icon={<HugeiconsIcon icon={File02Icon} className="size-3.5" />}
             label="Logging"
             active={activeSection === "logs"}
             onClick={() => setActiveSection("logs")}
@@ -264,7 +273,7 @@ export function SettingsPage() {
                                   className="h-9 w-9 shrink-0"
                                   aria-label="Browse directory"
                                 >
-                                  <FolderOpen className="size-4" />
+                                  <HugeiconsIcon icon={FolderOpenIcon} className="size-4" />
                                 </Button>
                               </div>
                             </FormControl>
@@ -523,7 +532,9 @@ export function SettingsPage() {
                     disabled={isUpdating || !isDirty}
                     className="h-9 gap-2 px-5"
                   >
-                    {isUpdating && <Loader2 className="size-3.5 animate-spin" />}
+                    {isUpdating && (
+                      <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+                    )}
                     <span>Save</span>
                   </Button>
                 </div>

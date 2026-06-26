@@ -7,13 +7,14 @@
  * - 深浅主题统一结构，仅 token 色值切换
  */
 
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon,
-} from "lucide-react";
+  CheckmarkCircle02Icon,
+  InformationCircleIcon,
+  Loading03Icon,
+  AlertCircleIcon,
+  Alert02Icon,
+} from "@hugeicons/core-free-icons";
 import { useTheme } from "@/lib/theme";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
@@ -64,11 +65,20 @@ const Toaster = ({ ...props }: ToasterProps) => {
         },
       }}
       icons={{
-        success: <CircleCheckIcon className="text-success size-5 shrink-0" />,
-        info: <InfoIcon className="text-info size-5 shrink-0" />,
-        warning: <TriangleAlertIcon className="text-warning size-5 shrink-0" />,
-        error: <OctagonXIcon className="text-destructive size-5 shrink-0" />,
-        loading: <Loader2Icon className="text-muted-foreground size-5 shrink-0 animate-spin" />,
+        success: (
+          <HugeiconsIcon icon={CheckmarkCircle02Icon} className="text-success size-5 shrink-0" />
+        ),
+        info: <HugeiconsIcon icon={InformationCircleIcon} className="text-info size-5 shrink-0" />,
+        warning: <HugeiconsIcon icon={Alert02Icon} className="text-warning size-5 shrink-0" />,
+        error: (
+          <HugeiconsIcon icon={AlertCircleIcon} className="text-destructive size-5 shrink-0" />
+        ),
+        loading: (
+          <HugeiconsIcon
+            icon={Loading03Icon}
+            className="text-muted-foreground size-5 shrink-0 animate-spin"
+          />
+        ),
       }}
       style={
         {

@@ -3,14 +3,15 @@
  * 首次连接或 HostKey 变更时显示
  */
 
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Loader2,
-  ShieldAlert,
-  ShieldCheck,
-  Fingerprint,
-  Server,
-  AlertTriangle,
-} from "lucide-react";
+  Loading03Icon,
+  SecurityWarningIcon,
+  SecurityCheckIcon,
+  FingerPrintIcon,
+  ServerStack01Icon,
+  Alert02Icon,
+} from "@hugeicons/core-free-icons";
 
 import {
   Dialog,
@@ -49,7 +50,7 @@ export function HostKeyDialog({
   if (!payload) return null;
 
   const isMismatch = payload.status === "mismatch";
-  const Icon = isMismatch ? ShieldAlert : ShieldCheck;
+  const icon = isMismatch ? SecurityWarningIcon : SecurityCheckIcon;
 
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && !isProcessing) {
@@ -69,7 +70,10 @@ export function HostKeyDialog({
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Icon className={cn("size-4", isMismatch ? "text-destructive" : "text-warning")} />
+            <HugeiconsIcon
+              icon={icon}
+              className={cn("size-4", isMismatch ? "text-destructive" : "text-warning")}
+            />
             <span>{isMismatch ? "Host key mismatch" : "Verify host key"}</span>
           </DialogTitle>
           <DialogDescription asChild>
@@ -85,7 +89,7 @@ export function HostKeyDialog({
           {/* 服务器信息 */}
           <div className="bg-background/30 flex items-center justify-between rounded px-3 py-2 text-xs">
             <span className="text-muted-foreground flex items-center gap-2">
-              <Server className="size-3" />
+              <HugeiconsIcon icon={ServerStack01Icon} className="size-3" />
               Server
             </span>
             <span className="text-primary font-mono">
@@ -107,7 +111,7 @@ export function HostKeyDialog({
           {/* 指纹 */}
           <div className="space-y-2">
             <div className="text-muted-foreground flex items-center gap-2 text-xs">
-              <Fingerprint className="text-primary size-3.5" />
+              <HugeiconsIcon icon={FingerPrintIcon} className="text-primary size-3.5" />
               <span>SHA256 fingerprint</span>
             </div>
             <div className="bg-background/50 border-border text-foreground rounded border p-3 font-mono text-xs leading-relaxed break-all">
@@ -118,7 +122,10 @@ export function HostKeyDialog({
           {/* 警告提示 */}
           {isMismatch && (
             <div className="bg-destructive/10 border-destructive/20 flex items-start gap-2 rounded border p-3 text-xs">
-              <AlertTriangle className="text-destructive mt-0.5 size-4 shrink-0" />
+              <HugeiconsIcon
+                icon={Alert02Icon}
+                className="text-destructive mt-0.5 size-4 shrink-0"
+              />
               <div className="space-y-1">
                 <p className="text-destructive font-medium">Security warning</p>
                 <p className="text-destructive/80">
@@ -140,7 +147,9 @@ export function HostKeyDialog({
             size="sm"
             variant={isMismatch ? "destructive" : "default"}
           >
-            {isProcessing && <Loader2 className="size-3.5 animate-spin" />}
+            {isProcessing && (
+              <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+            )}
             {isMismatch ? "Trust anyway" : "Trust"}
           </Button>
         </DialogFooter>

@@ -7,7 +7,8 @@ import { useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, FolderOpen } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon, FolderOpenIcon } from "@hugeicons/core-free-icons";
 import { open as openDialog } from "@tauri-apps/plugin-dialog";
 
 import { Button } from "@/components/ui/button";
@@ -364,7 +365,7 @@ export function ConnectionSheet({ open, onOpenChange, editProfile }: ConnectionS
                                 disabled={upsertProfile.isPending}
                                 aria-label="Browse key file"
                               >
-                                <FolderOpen className="size-4" />
+                                <HugeiconsIcon icon={FolderOpenIcon} className="size-4" />
                               </Button>
                             </div>
                           </FormControl>
@@ -476,7 +477,9 @@ export function ConnectionSheet({ open, onOpenChange, editProfile }: ConnectionS
               disabled={upsertProfile.isPending}
               className="gap-2"
             >
-              {upsertProfile.isPending && <Loader2 className="size-3.5 animate-spin" />}
+              {upsertProfile.isPending && (
+                <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+              )}
               <span>{isEditing ? "Save" : "Create"}</span>
             </Button>
           </div>

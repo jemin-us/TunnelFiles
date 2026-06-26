@@ -4,7 +4,8 @@
  */
 
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { EyeIcon, ViewOffIcon } from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,7 +52,11 @@ export function PasswordInput({
         onClick={() => setShow(!show)}
         aria-label={show ? "Hide password" : "Show password"}
       >
-        {show ? <Eye className="size-3.5" /> : <EyeOff className="size-3.5" />}
+        {show ? (
+          <HugeiconsIcon icon={EyeIcon} className="size-3.5" />
+        ) : (
+          <HugeiconsIcon icon={ViewOffIcon} className="size-3.5" />
+        )}
       </Button>
     </div>
   );

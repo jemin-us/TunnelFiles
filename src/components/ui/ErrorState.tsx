@@ -4,17 +4,18 @@
  */
 
 import { useState } from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  AlertCircle,
-  RefreshCw,
-  ChevronDown,
-  ChevronUp,
-  WifiOff,
-  Lock,
-  KeyRound,
-  FileX,
-  FolderOpen,
-} from "lucide-react";
+  AlertCircleIcon,
+  Refresh01Icon,
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  NoInternetIcon,
+  LockIcon,
+  Key02Icon,
+  FileXIcon,
+  FolderOpenIcon,
+} from "@hugeicons/core-free-icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ErrorCode, ERROR_MESSAGES, type AppError } from "@/types/error";
@@ -26,11 +27,11 @@ interface ErrorStateProps {
 }
 
 const errorIcons: Partial<Record<ErrorCode, React.ReactNode>> = {
-  [ErrorCode.NETWORK_LOST]: <WifiOff className="size-8" />,
-  [ErrorCode.AUTH_FAILED]: <KeyRound className="size-8" />,
-  [ErrorCode.PERMISSION_DENIED]: <Lock className="size-8" />,
-  [ErrorCode.NOT_FOUND]: <FileX className="size-8" />,
-  [ErrorCode.DIR_NOT_EMPTY]: <FolderOpen className="size-8" />,
+  [ErrorCode.NETWORK_LOST]: <HugeiconsIcon icon={NoInternetIcon} className="size-8" />,
+  [ErrorCode.AUTH_FAILED]: <HugeiconsIcon icon={Key02Icon} className="size-8" />,
+  [ErrorCode.PERMISSION_DENIED]: <HugeiconsIcon icon={LockIcon} className="size-8" />,
+  [ErrorCode.NOT_FOUND]: <HugeiconsIcon icon={FileXIcon} className="size-8" />,
+  [ErrorCode.DIR_NOT_EMPTY]: <HugeiconsIcon icon={FolderOpenIcon} className="size-8" />,
 };
 
 function parseError(error: AppError | Error | string): AppError {
@@ -59,7 +60,9 @@ export function ErrorState({ error, onRetry, className }: ErrorStateProps) {
 
   const friendlyMessage = ERROR_MESSAGES[appError.code] || appError.message;
 
-  const icon = errorIcons[appError.code] || <AlertCircle className="size-8" />;
+  const icon = errorIcons[appError.code] || (
+    <HugeiconsIcon icon={AlertCircleIcon} className="size-8" />
+  );
 
   const showRetry = appError.retryable && onRetry;
   const hasDetail = appError.detail && appError.detail.length > 0;
@@ -98,11 +101,11 @@ export function ErrorState({ error, onRetry, className }: ErrorStateProps) {
           >
             {detailExpanded ? (
               <>
-                Hide details <ChevronUp className="size-3" />
+                Hide details <HugeiconsIcon icon={ArrowUp01Icon} className="size-3" />
               </>
             ) : (
               <>
-                Show details <ChevronDown className="size-3" />
+                Show details <HugeiconsIcon icon={ArrowDown01Icon} className="size-3" />
               </>
             )}
           </Button>
@@ -116,7 +119,7 @@ export function ErrorState({ error, onRetry, className }: ErrorStateProps) {
 
       {showRetry && (
         <Button variant="outline" size="sm" onClick={onRetry} className="gap-2">
-          <RefreshCw className="size-4" />
+          <HugeiconsIcon icon={Refresh01Icon} className="size-4" />
           Retry
         </Button>
       )}
@@ -135,7 +138,7 @@ interface InlineErrorProps {
 export function InlineError({ message, className }: InlineErrorProps) {
   return (
     <div className={cn("text-destructive flex items-center gap-2 text-sm", className)} role="alert">
-      <AlertCircle className="size-4 shrink-0" />
+      <HugeiconsIcon icon={AlertCircleIcon} className="size-4 shrink-0" />
       <span>{message}</span>
     </div>
   );

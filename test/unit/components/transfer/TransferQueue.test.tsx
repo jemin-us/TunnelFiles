@@ -136,12 +136,10 @@ describe("TransferQueue", () => {
       }),
     ]);
 
-    const { container } = render(<TransferQueue />);
+    render(<TransferQueue />);
 
-    // The clear completed button contains a Trash2 icon (lucide-trash-2 class)
-    const trashIcon = container.querySelector(".lucide-trash-2");
-    expect(trashIcon).toBeInTheDocument();
-    const clearButton = trashIcon!.closest("button")!;
+    // The clear completed button is identified by its accessible label (icon-library agnostic)
+    const clearButton = screen.getByRole("button", { name: "Clear completed" });
     await user.click(clearButton);
 
     await waitFor(() => {

@@ -5,7 +5,8 @@
  */
 
 import { useState, useCallback, useEffect, useMemo } from "react";
-import { Loader2, Shield, FileText, Folder } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon, Shield01Icon, File02Icon, Folder01Icon } from "@hugeicons/core-free-icons";
 
 import {
   Dialog,
@@ -77,7 +78,7 @@ export function ChmodDialog({ open, onOpenChange, files, onSubmit, isPending }: 
       <DialogContent className="border-border bg-card sm:max-w-md" showCloseButton={!isPending}>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Shield className="text-primary size-4" />
+            <HugeiconsIcon icon={Shield01Icon} className="text-primary size-4" />
             <span>Change permissions</span>
           </DialogTitle>
           <DialogDescription className="sr-only">
@@ -103,9 +104,9 @@ export function ChmodDialog({ open, onOpenChange, files, onSubmit, isPending }: 
                     className="text-muted-foreground flex items-center gap-2 font-mono text-xs"
                   >
                     {file.isDir ? (
-                      <Folder className="text-primary size-3 shrink-0" />
+                      <HugeiconsIcon icon={Folder01Icon} className="text-primary size-3 shrink-0" />
                     ) : (
-                      <FileText className="size-3 shrink-0" />
+                      <HugeiconsIcon icon={File02Icon} className="size-3 shrink-0" />
                     )}
                     <span className="truncate" title={file.name}>
                       {file.name}
@@ -135,7 +136,7 @@ export function ChmodDialog({ open, onOpenChange, files, onSubmit, isPending }: 
             Cancel
           </Button>
           <Button type="button" size="sm" onClick={handleSubmit} disabled={isPending}>
-            {isPending && <Loader2 className="size-3.5 animate-spin" />}
+            {isPending && <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />}
             Apply
           </Button>
         </DialogFooter>

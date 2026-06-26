@@ -3,7 +3,8 @@
  */
 
 import { useNavigate } from "react-router-dom";
-import { Home } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Home01Icon } from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 
@@ -22,7 +23,7 @@ export function NotFoundPage() {
           Go back
         </Button>
         <Button size="sm" onClick={() => navigate("/connections")} className="gap-2">
-          <Home className="size-3.5" />
+          <HugeiconsIcon icon={Home01Icon} className="size-3.5" />
           Home
         </Button>
       </div>

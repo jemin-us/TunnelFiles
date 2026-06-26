@@ -4,7 +4,8 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon } from "@hugeicons/core-free-icons";
 
 import {
   Dialog,
@@ -109,7 +110,11 @@ export function PasswordDialog({
               Cancel
             </Button>
             <Button type="submit" size="sm" disabled={isConnecting || !value.trim()}>
-              {isConnecting ? <Loader2 className="size-3.5 animate-spin" /> : "Connect"}
+              {isConnecting ? (
+                <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+              ) : (
+                "Connect"
+              )}
             </Button>
           </DialogFooter>
         </form>

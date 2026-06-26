@@ -3,7 +3,8 @@
  */
 
 import { useState, useCallback } from "react";
-import { Loader2, Pencil } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Loading03Icon, Edit02Icon } from "@hugeicons/core-free-icons";
 
 import { cn } from "@/lib/utils";
 import {
@@ -91,7 +92,7 @@ export function RenameDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Pencil className="text-primary size-4" />
+              <HugeiconsIcon icon={Edit02Icon} className="text-primary size-4" />
               <span>Rename</span>
             </DialogTitle>
             <DialogDescription className="sr-only">
@@ -152,7 +153,9 @@ export function RenameDialog({
               Cancel
             </Button>
             <Button type="submit" size="sm" disabled={isPending || !name.trim()}>
-              {isPending && <Loader2 className="size-3.5 animate-spin" />}
+              {isPending && (
+                <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
+              )}
               Confirm
             </Button>
           </DialogFooter>

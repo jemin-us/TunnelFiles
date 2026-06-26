@@ -4,16 +4,17 @@
  */
 
 import { useCallback } from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Download,
-  Pencil,
-  Trash2,
-  FolderOpen,
-  FolderPlus,
-  Copy,
-  Files,
-  Shield,
-} from "lucide-react";
+  Download01Icon,
+  Edit02Icon,
+  Delete02Icon,
+  FolderOpenIcon,
+  FolderAddIcon,
+  Copy01Icon,
+  Files01Icon,
+  Shield01Icon,
+} from "@hugeicons/core-free-icons";
 
 import {
   ContextMenu,
@@ -86,7 +87,7 @@ export function FileContextMenu({
           <>
             <ContextMenuItem onClick={onEnterDir} className="justify-between gap-2">
               <span className="flex items-center gap-2">
-                <FolderOpen className="size-3.5" />
+                <HugeiconsIcon icon={FolderOpenIcon} className="size-3.5" />
                 <span>Open</span>
               </span>
               <span className="text-muted-foreground text-xs">↵</span>
@@ -98,7 +99,7 @@ export function FileContextMenu({
         {/* Download - supports batch */}
         {onDownload && (
           <ContextMenuItem onClick={onDownload} className="gap-2">
-            <Download className="size-3.5" />
+            <HugeiconsIcon icon={Download01Icon} className="size-3.5" />
             <span>{isMultiSelect ? `Download ${selectionCount} items` : "Download"}</span>
           </ContextMenuItem>
         )}
@@ -107,13 +108,13 @@ export function FileContextMenu({
         <ContextMenuSeparator className="bg-border" />
 
         <ContextMenuItem onClick={handleCopyPath} className="gap-2">
-          <Copy className="size-3.5" />
+          <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
           <span>Copy path</span>
         </ContextMenuItem>
 
         {!isMultiSelect && (
           <ContextMenuItem onClick={handleCopyName} className="gap-2">
-            <Files className="size-3.5" />
+            <HugeiconsIcon icon={Files01Icon} className="size-3.5" />
             <span>Copy name</span>
           </ContextMenuItem>
         )}
@@ -125,7 +126,7 @@ export function FileContextMenu({
         {onNewFolder && (
           <ContextMenuItem onClick={onNewFolder} className="justify-between gap-2">
             <span className="flex items-center gap-2">
-              <FolderPlus className="size-3.5" />
+              <HugeiconsIcon icon={FolderAddIcon} className="size-3.5" />
               <span>New folder</span>
             </span>
             <span className="text-muted-foreground text-xs">{formatShortcut("Mod+N")}</span>
@@ -136,7 +137,7 @@ export function FileContextMenu({
         {!isMultiSelect && onRename && (
           <ContextMenuItem onClick={onRename} className="justify-between gap-2">
             <span className="flex items-center gap-2">
-              <Pencil className="size-3.5" />
+              <HugeiconsIcon icon={Edit02Icon} className="size-3.5" />
               <span>Rename</span>
             </span>
             <span className="text-muted-foreground text-xs">{formatShortcut("Mod+R")}</span>
@@ -146,7 +147,7 @@ export function FileContextMenu({
         {/* Change permissions - supports batch */}
         {onChmod && (
           <ContextMenuItem onClick={onChmod} className="gap-2">
-            <Shield className="size-3.5" />
+            <HugeiconsIcon icon={Shield01Icon} className="size-3.5" />
             <span>{isMultiSelect ? `Chmod ${selectionCount} items` : "Chmod"}</span>
           </ContextMenuItem>
         )}
@@ -156,7 +157,7 @@ export function FileContextMenu({
         {/* Delete - supports batch */}
         <ContextMenuItem variant="destructive" onClick={onDelete} className="justify-between gap-2">
           <span className="flex items-center gap-2">
-            <Trash2 className="size-3.5" />
+            <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
             <span>{isMultiSelect ? `Delete ${selectionCount} items` : "Delete"}</span>
           </span>
           <span className="text-xs opacity-70">{formatShortcut("Mod+Backspace")}</span>

@@ -5,7 +5,13 @@
  */
 
 import { useEffect, useState } from "react";
-import { Download, FileText, FileWarning, Loader2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Download01Icon,
+  File02Icon,
+  FileBlockIcon,
+  Loading03Icon,
+} from "@hugeicons/core-free-icons";
 
 import {
   Dialog,
@@ -123,7 +129,7 @@ export function PreviewDialog({
       <DialogContent className="max-h-[80vh] max-w-[720px] gap-0 overflow-hidden p-0">
         <DialogHeader className="border-border border-b px-4 py-3">
           <DialogTitle className="flex items-center gap-2 text-sm font-medium">
-            <FileText className="text-muted-foreground size-4" />
+            <HugeiconsIcon icon={File02Icon} className="text-muted-foreground size-4" />
             <span className="truncate" title={file?.name ?? "Preview"}>
               {file?.name ?? "Preview"}
             </span>
@@ -141,14 +147,17 @@ export function PreviewDialog({
           {/* Loading state */}
           {loading && (
             <div className="flex h-[300px] items-center justify-center">
-              <Loader2 className="text-muted-foreground size-5 animate-spin" />
+              <HugeiconsIcon
+                icon={Loading03Icon}
+                className="text-muted-foreground size-5 animate-spin"
+              />
             </div>
           )}
 
           {/* Error state */}
           {error && (
             <div className="flex h-[300px] flex-col items-center justify-center gap-3">
-              <FileWarning className="text-destructive size-8" />
+              <HugeiconsIcon icon={FileBlockIcon} className="text-destructive size-8" />
               <p className="text-muted-foreground max-w-sm text-center text-sm">{error}</p>
               <Button variant="outline" size="sm" onClick={() => setRetryCount((c) => c + 1)}>
                 Retry
@@ -168,7 +177,7 @@ export function PreviewDialog({
           {/* Binary fallback */}
           {result && result.contentType === "binary" && (
             <div className="flex h-[300px] flex-col items-center justify-center gap-3">
-              <FileWarning className="text-muted-foreground size-8" />
+              <HugeiconsIcon icon={FileBlockIcon} className="text-muted-foreground size-8" />
               <div className="text-center">
                 <p className="text-sm font-medium">Binary file</p>
                 <p className="text-muted-foreground text-xs">
@@ -185,7 +194,7 @@ export function PreviewDialog({
                     onOpenChange(false);
                   }}
                 >
-                  <Download className="mr-1.5 size-3.5" />
+                  <HugeiconsIcon icon={Download01Icon} className="mr-1.5 size-3.5" />
                   Download
                 </Button>
               )}
@@ -198,7 +207,7 @@ export function PreviewDialog({
             result.content === null &&
             result.size === 0 && (
               <div className="flex h-[300px] flex-col items-center justify-center gap-2">
-                <FileText className="text-muted-foreground size-8" />
+                <HugeiconsIcon icon={File02Icon} className="text-muted-foreground size-8" />
                 <p className="text-muted-foreground text-sm">Empty file</p>
               </div>
             )}

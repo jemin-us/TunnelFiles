@@ -4,7 +4,8 @@
  */
 
 import { type ReactNode } from "react";
-import { Upload } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Upload01Icon } from "@hugeicons/core-free-icons";
 
 import { useDropUpload } from "@/hooks/useDropUpload";
 import { cn } from "@/lib/utils";
@@ -46,7 +47,7 @@ export function DropZone({
           {/* Content */}
           <div className="animate-fade-in relative flex flex-col items-center gap-4">
             <div className="bg-primary/10 border-primary/30 flex h-16 w-16 items-center justify-center rounded-lg border">
-              <Upload className="text-primary size-8" />
+              <HugeiconsIcon icon={Upload01Icon} className="text-primary size-8" />
             </div>
 
             <div className="space-y-2 text-center">

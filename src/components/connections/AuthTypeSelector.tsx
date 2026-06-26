@@ -1,4 +1,5 @@
-import { Key, KeyRound } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Key01Icon, Key02Icon } from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -32,7 +33,7 @@ export function AuthTypeSelector({ value, onChange, disabled }: AuthTypeSelector
             : "text-muted-foreground hover:text-foreground hover:bg-background/50"
         )}
       >
-        <Key className="size-3.5" />
+        <HugeiconsIcon icon={Key01Icon} className="size-3.5" />
         <span>Password</span>
       </Button>
       <Button
@@ -49,7 +50,7 @@ export function AuthTypeSelector({ value, onChange, disabled }: AuthTypeSelector
             : "text-muted-foreground hover:text-foreground hover:bg-background/50"
         )}
       >
-        <KeyRound className="size-3.5" />
+        <HugeiconsIcon icon={Key02Icon} className="size-3.5" />
         <span>SSH key</span>
       </Button>
     </div>

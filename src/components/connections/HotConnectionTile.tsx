@@ -3,7 +3,15 @@
  * Larger visual weight communicates higher usage frequency (Polanyi: tacit spatial recognition)
  */
 
-import { Loader2, Key, ArrowRight, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Loading03Icon,
+  Key01Icon,
+  ArrowRight02Icon,
+  MoreHorizontalIcon,
+  Edit02Icon,
+  Delete02Icon,
+} from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -66,7 +74,12 @@ export function HotConnectionTile({
       {/* Info — no icon: every connection had the same icon, adding zero information */}
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          {isConnecting && <Loader2 className="text-primary size-3.5 shrink-0 animate-spin" />}
+          {isConnecting && (
+            <HugeiconsIcon
+              icon={Loading03Icon}
+              className="text-primary size-3.5 shrink-0 animate-spin"
+            />
+          )}
           <span className="truncate text-sm font-semibold" title={profile.name}>
             {profile.name}
           </span>
@@ -75,7 +88,7 @@ export function HotConnectionTile({
               className="text-primary/70 flex shrink-0 items-center gap-0.5 text-xs"
               aria-label="SSH key authentication"
             >
-              <Key className="size-3" />
+              <HugeiconsIcon icon={Key01Icon} className="size-3" />
             </span>
           )}
         </div>
@@ -107,7 +120,7 @@ export function HotConnectionTile({
             onConnect(profile.id);
           }}
         >
-          <ArrowRight className="size-3.5" />
+          <HugeiconsIcon icon={ArrowRight02Icon} className="size-3.5" />
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -119,7 +132,7 @@ export function HotConnectionTile({
               className="text-muted-foreground hover:text-foreground h-6 w-6"
               onClick={(e) => e.stopPropagation()}
             >
-              <MoreHorizontal className="size-3.5" />
+              <HugeiconsIcon icon={MoreHorizontalIcon} className="size-3.5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-36">
@@ -129,7 +142,7 @@ export function HotConnectionTile({
                 onEdit(profile);
               }}
             >
-              <Pencil className="size-3.5" />
+              <HugeiconsIcon icon={Edit02Icon} className="size-3.5" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -140,7 +153,7 @@ export function HotConnectionTile({
                 onDelete(profile);
               }}
             >
-              <Trash2 className="size-3.5" />
+              <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -5,7 +5,8 @@
 
 import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useCallback } from "react";
-import { Settings, Moon, Sun, ChevronLeft } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Settings01Icon, Moon02Icon, Sun03Icon, ArrowLeft01Icon } from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -74,7 +75,7 @@ export function MainLayout() {
                     className="text-muted-foreground h-7 gap-1 px-2 text-sm"
                     onClick={handleBack}
                   >
-                    <ChevronLeft className="size-3.5" />
+                    <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5" />
                     <span>Back</span>
                   </Button>
                 </TooltipTrigger>
@@ -106,7 +107,11 @@ export function MainLayout() {
                   onClick={toggleTheme}
                   aria-label={theme === "dark" ? "Switch to light" : "Switch to dark"}
                 >
-                  {theme === "dark" ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
+                  {theme === "dark" ? (
+                    <HugeiconsIcon icon={Sun03Icon} className="size-3.5" />
+                  ) : (
+                    <HugeiconsIcon icon={Moon02Icon} className="size-3.5" />
+                  )}
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
@@ -124,7 +129,7 @@ export function MainLayout() {
                   onClick={handleSettings}
                   aria-label="Settings"
                 >
-                  <Settings className="size-3.5" />
+                  <HugeiconsIcon icon={Settings01Icon} className="size-3.5" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">

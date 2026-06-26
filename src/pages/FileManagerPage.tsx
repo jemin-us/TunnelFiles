@@ -6,19 +6,20 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Loader2,
-  PanelRightClose,
-  PanelRightOpen,
-  Activity,
-  FolderOpen,
-  TerminalSquare,
-  RefreshCw,
-  Eye,
-  EyeOff,
-  FolderPlus,
-  Upload,
-} from "lucide-react";
+  Loading03Icon,
+  SidebarRight01Icon,
+  SidebarRightIcon,
+  Activity01Icon,
+  FolderOpenIcon,
+  TerminalIcon,
+  Refresh01Icon,
+  EyeIcon,
+  ViewOffIcon,
+  FolderAddIcon,
+  Upload01Icon,
+} from "@hugeicons/core-free-icons";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { FullPageLoader } from "@/components/ui/LoadingSpinner";
@@ -130,7 +131,7 @@ function PageToolbar({
                 className="h-7 w-7"
                 onClick={onCreateFolder}
               >
-                <FolderPlus className="size-3.5" />
+                <HugeiconsIcon icon={FolderAddIcon} className="size-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent className="text-xs">New folder</TooltipContent>
@@ -146,7 +147,7 @@ function PageToolbar({
                 className="h-7 w-7"
                 onClick={onUpload}
               >
-                <Upload className="size-3.5" />
+                <HugeiconsIcon icon={Upload01Icon} className="size-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent className="text-xs">Upload files</TooltipContent>
@@ -164,9 +165,9 @@ function PageToolbar({
                 disabled={isFetching}
               >
                 {isFetching ? (
-                  <Loader2 className="size-3.5 animate-spin" />
+                  <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />
                 ) : (
-                  <RefreshCw className="size-3.5" />
+                  <HugeiconsIcon icon={Refresh01Icon} className="size-3.5" />
                 )}
               </Button>
             </TooltipTrigger>
@@ -184,7 +185,11 @@ function PageToolbar({
                 onClick={onToggleHidden}
                 aria-pressed={showHidden}
               >
-                {showHidden ? <Eye className="size-3.5" /> : <EyeOff className="size-3.5" />}
+                {showHidden ? (
+                  <HugeiconsIcon icon={EyeIcon} className="size-3.5" />
+                ) : (
+                  <HugeiconsIcon icon={ViewOffIcon} className="size-3.5" />
+                )}
               </Button>
             </TooltipTrigger>
             <TooltipContent className="text-xs">
@@ -198,13 +203,13 @@ function PageToolbar({
           <div className="text-muted-foreground flex flex-1 items-center gap-2 text-xs">
             {isTerminalOpening && (
               <>
-                <Loader2 className="text-primary size-3 animate-spin" />
+                <HugeiconsIcon icon={Loading03Icon} className="text-primary size-3 animate-spin" />
                 <span>Connecting...</span>
               </>
             )}
             {isTerminalReconnecting && (
               <>
-                <Loader2 className="text-warning size-3 animate-spin" />
+                <HugeiconsIcon icon={Loading03Icon} className="text-warning size-3 animate-spin" />
                 <span>
                   Reconnecting...
                   {reconnectAttempt != null &&
@@ -225,7 +230,7 @@ function PageToolbar({
                   className="h-6 px-2 text-xs"
                   onClick={onReconnect}
                 >
-                  <RefreshCw className="mr-1 size-3" />
+                  <HugeiconsIcon icon={Refresh01Icon} className="mr-1 size-3" />
                   Reconnect
                 </Button>
               </>
@@ -251,7 +256,7 @@ function PageToolbar({
             onClick={() => onTabChange("files")}
             aria-pressed={activeTab === "files"}
           >
-            <FolderOpen className="size-3.5" />
+            <HugeiconsIcon icon={FolderOpenIcon} className="size-3.5" />
           </Button>
         </TooltipTrigger>
         <TooltipContent className="text-xs">Files</TooltipContent>
@@ -270,7 +275,7 @@ function PageToolbar({
             onClick={() => onTabChange("terminal")}
             aria-pressed={activeTab === "terminal"}
           >
-            <TerminalSquare className="size-3.5" />
+            <HugeiconsIcon icon={TerminalIcon} className="size-3.5" />
           </Button>
         </TooltipTrigger>
         <TooltipContent className="text-xs">Terminal</TooltipContent>
@@ -403,7 +408,10 @@ function MainContent({
                 <Suspense
                   fallback={
                     <div className="flex h-full items-center justify-center">
-                      <Loader2 className="text-primary size-6 animate-spin" />
+                      <HugeiconsIcon
+                        icon={Loading03Icon}
+                        className="text-primary size-6 animate-spin"
+                      />
                     </div>
                   }
                 >
@@ -419,7 +427,7 @@ function MainContent({
               <div className="bg-background flex h-full flex-col items-center justify-center gap-4">
                 {isTerminalOpening ? (
                   <>
-                    <TerminalSquare className="text-primary size-10" />
+                    <HugeiconsIcon icon={TerminalIcon} className="text-primary size-10" />
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-muted-foreground text-sm">Opening terminal...</span>
                       <span className="text-muted-foreground/60 text-xs">
@@ -429,11 +437,14 @@ function MainContent({
                   </>
                 ) : (
                   <>
-                    <TerminalSquare className="text-muted-foreground/50 size-10" />
+                    <HugeiconsIcon
+                      icon={TerminalIcon}
+                      className="text-muted-foreground/50 size-10"
+                    />
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-muted-foreground text-sm">Terminal not connected</span>
                       <Button variant="outline" size="sm" onClick={openTerminal} className="mt-2">
-                        <TerminalSquare className="size-3.5" />
+                        <HugeiconsIcon icon={TerminalIcon} className="size-3.5" />
                         Connect
                       </Button>
                     </div>
@@ -707,7 +718,7 @@ export function FileManagerPage() {
             {/* Sidebar header */}
             <div className="border-sidebar-border bg-sidebar flex h-9 items-center justify-between border-b px-3">
               <div className="flex items-center gap-2">
-                <Activity className="text-primary size-3.5" />
+                <HugeiconsIcon icon={Activity01Icon} className="text-primary size-3.5" />
                 <span className="text-sm font-semibold">Transfer queue</span>
               </div>
               <Tooltip>
@@ -719,7 +730,7 @@ export function FileManagerPage() {
                     className="h-7 w-7"
                     onClick={toggleSidebar}
                   >
-                    <PanelRightClose className="size-3.5" />
+                    <HugeiconsIcon icon={SidebarRight01Icon} className="size-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="left" className="text-xs">
@@ -763,7 +774,7 @@ export function FileManagerPage() {
                 className="h-7 w-7"
                 onClick={toggleSidebar}
               >
-                <PanelRightOpen className="size-3.5" />
+                <HugeiconsIcon icon={SidebarRightIcon} className="size-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="left" className="text-xs">
@@ -775,7 +786,7 @@ export function FileManagerPage() {
         {/* Collapsed state: Activity icon with active transfer badge */}
         <div className="mt-3 flex flex-col items-center gap-1">
           <div className="relative">
-            <Activity className="text-muted-foreground size-3.5" />
+            <HugeiconsIcon icon={Activity01Icon} className="text-muted-foreground size-3.5" />
             {activeTransferCount > 0 && (
               <span className="bg-primary text-primary-foreground absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full px-0.5 text-xs leading-none font-medium">
                 {activeTransferCount}

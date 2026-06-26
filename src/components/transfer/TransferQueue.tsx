@@ -3,18 +3,19 @@
  */
 
 import { useCallback, useMemo } from "react";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import {
-  Upload,
-  Download,
-  X,
-  Check,
-  RotateCcw,
-  CheckCircle,
-  XCircle,
-  Trash2,
-  History,
-  Clock,
-} from "lucide-react";
+  Upload01Icon,
+  Download01Icon,
+  Cancel01Icon,
+  Tick02Icon,
+  RotateLeft01Icon,
+  CheckmarkCircle02Icon,
+  CancelCircleIcon,
+  Delete02Icon,
+  HistoryIcon,
+  Clock01Icon,
+} from "@hugeicons/core-free-icons";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -108,7 +109,7 @@ export function TransferQueue({ className }: TransferQueueProps) {
                   className="hover:bg-destructive/10 hover:text-destructive h-6 w-6"
                   onClick={handleClearCompleted}
                 >
-                  <Trash2 className="size-3.5" />
+                  <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent className="text-xs">Clear completed</TooltipContent>
@@ -156,7 +157,7 @@ export function TransferQueue({ className }: TransferQueueProps) {
           <div className={cn(hasActiveTasks && "border-border/50 mt-2 border-t pt-2")}>
             <div className="flex items-center justify-between px-3 py-1.5">
               <div className="flex items-center gap-1.5">
-                <History className="text-muted-foreground size-3.5" />
+                <HugeiconsIcon icon={HistoryIcon} className="text-muted-foreground size-3.5" />
                 <span className="text-muted-foreground text-xs font-medium">History</span>
               </div>
               <Tooltip>
@@ -169,7 +170,7 @@ export function TransferQueue({ className }: TransferQueueProps) {
                     onClick={() => clearHistory.mutate()}
                     disabled={clearHistory.isPending}
                   >
-                    <Trash2 className="size-3.5" />
+                    <HugeiconsIcon icon={Delete02Icon} className="size-3.5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="text-xs">Clear history</TooltipContent>
@@ -285,7 +286,7 @@ function TaskStatusInfo({ task }: { task: TransferTask }) {
     case "success":
       return (
         <div className="text-success flex items-center gap-1 text-xs">
-          <Check className="size-3" />
+          <HugeiconsIcon icon={Tick02Icon} className="size-3" />
           <span>Transfer complete</span>
         </div>
       );
@@ -294,7 +295,7 @@ function TaskStatusInfo({ task }: { task: TransferTask }) {
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="text-destructive flex min-w-0 items-center gap-1 text-xs">
-              <X className="size-3 shrink-0" />
+              <HugeiconsIcon icon={Cancel01Icon} className="size-3 shrink-0" />
               <span className="truncate">{task.errorMessage || "Transfer failed"}</span>
             </div>
           </TooltipTrigger>
@@ -321,18 +322,22 @@ function TaskIcon({
 
   switch (status) {
     case "success":
-      return <CheckCircle className={cn(baseClasses, "text-success")} />;
+      return (
+        <HugeiconsIcon icon={CheckmarkCircle02Icon} className={cn(baseClasses, "text-success")} />
+      );
     case "failed":
-      return <XCircle className={cn(baseClasses, "text-destructive")} />;
+      return (
+        <HugeiconsIcon icon={CancelCircleIcon} className={cn(baseClasses, "text-destructive")} />
+      );
     default: {
-      const Icon = direction === "upload" ? Upload : Download;
+      const icon = direction === "upload" ? Upload01Icon : Download01Icon;
       const colorClass =
         status === "running"
           ? direction === "upload"
             ? "text-transfer-upload"
             : "text-transfer-download"
           : "text-muted-foreground";
-      return <Icon className={cn(baseClasses, colorClass)} />;
+      return <HugeiconsIcon icon={icon} className={cn(baseClasses, colorClass)} />;
     }
   }
 }
@@ -352,7 +357,7 @@ function TaskActions({ status, retryable, onCancel, onRetry, onRemove }: TaskAct
     <div className="flex shrink-0 items-center gap-0.5">
       {isActive && (
         <ActionButton
-          icon={X}
+          icon={Cancel01Icon}
           tooltip="Cancel"
           onClick={onCancel}
           className="hover:text-destructive"
@@ -360,7 +365,7 @@ function TaskActions({ status, retryable, onCancel, onRetry, onRemove }: TaskAct
       )}
       {status === "failed" && retryable && (
         <ActionButton
-          icon={RotateCcw}
+          icon={RotateLeft01Icon}
           tooltip="Retry"
           onClick={onRetry}
           className="hover:text-warning"
@@ -368,7 +373,7 @@ function TaskActions({ status, retryable, onCancel, onRetry, onRemove }: TaskAct
       )}
       {!isActive && (
         <ActionButton
-          icon={X}
+          icon={Cancel01Icon}
           tooltip="Remove"
           onClick={onRemove}
           className="hover:bg-destructive/10 hover:text-destructive"
@@ -379,12 +384,12 @@ function TaskActions({ status, retryable, onCancel, onRetry, onRemove }: TaskAct
 }
 
 function ActionButton({
-  icon: Icon,
+  icon,
   tooltip,
   onClick,
   className,
 }: {
-  icon: typeof X;
+  icon: IconSvgElement;
   tooltip: string;
   onClick: () => void;
   className?: string;
@@ -399,7 +404,7 @@ function ActionButton({
           className={cn("h-6 w-6", className)}
           onClick={onClick}
         >
-          <Icon className="size-3.5" />
+          <HugeiconsIcon icon={icon} className="size-3.5" />
         </Button>
       </TooltipTrigger>
       <TooltipContent className="text-xs">{tooltip}</TooltipContent>
@@ -413,11 +418,12 @@ function ActionButton({
 
 function HistoryItem({ entry }: { entry: TransferHistoryEntry }) {
   const fileName = entry.remotePath.split("/").pop() || entry.remotePath;
-  const DirectionIcon = entry.direction === "upload" ? Upload : Download;
+  const directionIcon = entry.direction === "upload" ? Upload01Icon : Download01Icon;
 
   return (
     <div className="flex min-w-0 items-center gap-2 px-3 py-2 opacity-60">
-      <DirectionIcon
+      <HugeiconsIcon
+        icon={directionIcon}
         className={cn(
           "size-3.5 shrink-0",
           entry.direction === "upload" ? "text-transfer-upload" : "text-transfer-download"
@@ -430,7 +436,7 @@ function HistoryItem({ entry }: { entry: TransferHistoryEntry }) {
       <Tooltip>
         <TooltipTrigger asChild>
           <span className="text-muted-foreground flex shrink-0 items-center gap-1 text-xs">
-            <Clock className="size-3" />
+            <HugeiconsIcon icon={Clock01Icon} className="size-3" />
             {formatRelativeTime(entry.startedAt)}
           </span>
         </TooltipTrigger>
@@ -456,7 +462,7 @@ function HistoryStatusBadge({ status }: { status: TransferHistoryEntry["status"]
           variant="outline"
           className="border-success/30 text-success shrink-0 gap-0.5 px-1.5 py-0 text-[10px]"
         >
-          <Check className="size-2.5" />
+          <HugeiconsIcon icon={Tick02Icon} className="size-2.5" />
           Done
         </Badge>
       );
@@ -466,7 +472,7 @@ function HistoryStatusBadge({ status }: { status: TransferHistoryEntry["status"]
           variant="outline"
           className="border-destructive/30 text-destructive shrink-0 gap-0.5 px-1.5 py-0 text-[10px]"
         >
-          <X className="size-2.5" />
+          <HugeiconsIcon icon={Cancel01Icon} className="size-2.5" />
           Failed
         </Badge>
       );

@@ -47,7 +47,7 @@ refactor: extract terminal font/scrollback constants, fix duplicate useSettings 
 | `src-tauri/src/services/security_service.rs` | `security` |
 | `src/pages/SettingsPage.tsx`          | `settings`    |
 | `.github/workflows/*`                 | `ci`          |
-| `__tests__/**`                        | `test`        |
+| `test/**`                             | `test`        |
 | Across multiple domains               | omit scope    |
 
 ## Pre-commit Quality Gate

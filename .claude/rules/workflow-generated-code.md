@@ -117,7 +117,7 @@ export const ERROR_MESSAGES: Record<GeneratedErrorCode, string> = {
 
 ## Consistency Check (binding-checks.ts)
 
-The project has `src/types/bindings/binding-checks.ts`, which validates at the `tsc --noEmit` stage that hand-written types do not drift from the bindings:
+The project has `src/types/binding-checks.ts`, which validates at the `tsc --noEmit` stage that hand-written types do not drift from the bindings:
 
 ```typescript
 // Example (pseudo):
